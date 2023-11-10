@@ -15,6 +15,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.example.openapideveloperexampleapp.BuildConfig.DEBUG
+import com.swarovskioptik.comm.SOCommDeviceSearcher
 import com.swarovskioptik.comm.SOCommOutsideAPI
 import com.swarovskioptik.comm.SOCommOutsideAPIBuilder
 import com.swarovskioptik.comm.definition.SOContext
@@ -25,6 +26,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import java.util.LinkedList
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicReference
 
 class MainActivity : Activity() {
     companion object {
@@ -154,12 +156,51 @@ class MainActivity : Activity() {
 
         val buttonConnectToFolke = findViewById<Button>(R.id.buttonConnectToFalke)
 
+        // Disable the button until at least one device is found
+        buttonConnectToFolke.isEnabled = false
+        buttonConnectToFolke.text = getString(R.string.connect_to_falke, "UNKNOWN")
+
+        // TODO: This code starts the search and stops when the first device is found.
+        // A real world application would continue the search and show the user a list of
+        // available devices. A further optimization is to save the last used device name
+        // and present it to the user without searching for new devices.
+        // NOTE: The search process drains the battery. It should be stopped as early as
+        // possible.
+        val deviceSearchDisposables = CompositeDisposable()
+        val atomicDeviceValue: AtomicReference<String> = AtomicReference("")
+        val deviceSearcher = SOCommDeviceSearcher.create(this)
+        deviceSearcher.search()
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnError { e ->
+                Log.e(TAG, "Error while searching Falke devices", e)
+                Toast.makeText(this, "Error while searching for Falke devices!", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            .doOnNext { foundDevices ->
+                if (DEBUG) Log.d(TAG, "foundDevices: $foundDevices")
+                if (foundDevices.isEmpty())
+                    return@doOnNext
+
+                // Just use the first device. This is only example code to show the concepts.
+                // A real world example would add the found devices to a list and show it to the
+                // user.
+                val foundDevice = foundDevices.first()
+
+                atomicDeviceValue.set(foundDevice.deviceName)
+                buttonConnectToFolke.isEnabled = true
+                buttonConnectToFolke.text =
+                    getString(R.string.connect_to_falke, foundDevice.deviceName)
+
+                // Dispose the Observable now. This will stop the search process.
+                deviceSearchDisposables.dispose()
+            }
+            .subscribe()
+            .addTo(deviceSearchDisposables)
+
         buttonConnectToFolke.setOnClickListener { button ->
             button.isEnabled = false
 
-            // TODO where to get the device name!
-            val deviceName = "AXV-TE1210001A"
-            sdk!!.connect(deviceName)
+            sdk!!.connect(atomicDeviceValue.get())
                 // Add a timeout. Otherwise the screen will block forever when no Falke device
                 // is in reach! But the timeout must also be long enough so the user can handle
                 // the initial pairing.
@@ -266,7 +307,8 @@ class MainActivity : Activity() {
             return UIState.CONNECT_TO_FALKE
 
         if (!sdk!!.availableContexts.blockingFirst().contains(SOContext.OpenAPIContextBLE)
-            || !sdk!!.contextsInUse.blockingFirst().contains(SOContext.OpenAPIContextBLE))
+            || !sdk!!.contextsInUse.blockingFirst().contains(SOContext.OpenAPIContextBLE)
+        )
             return UIState.WAIT_FOR_OPENAPI_INSIDE_APP
 
         return UIState.MAIN

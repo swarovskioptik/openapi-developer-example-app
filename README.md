@@ -41,6 +41,11 @@ the transitions happen not based on user input, but on external events, like
 losing the connection to the Falke. A real world application is expected to
 provide a better user experience.
 
+For a good user experience some in-process animations are needed. For example
+when the app search for available Fakle devices in reach or when the device
+connects to a Falke device. Otherwise the user does not know that a operation
+is in progress.
+
 
 # How to build it
 

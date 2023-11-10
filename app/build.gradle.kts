@@ -82,4 +82,5 @@ dependencies {
     implementation("no.nordicsemi.android:ble:2.5.1")
     implementation("org.bouncycastle:bcpkix-jdk15to18:1.70")
     implementation("com.google.protobuf:protobuf-javalite:3.21.1")
+    implementation("org.threeten:threetenbp:1.6.0")
 }

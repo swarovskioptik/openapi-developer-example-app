@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:text="Press the Button to search for the Falke device and connect to it."
+        android:text="Searching for a Falke device in reach. When a device is found, you can touch the button to connect to it."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
