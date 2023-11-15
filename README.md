@@ -55,10 +55,10 @@ that grants your application to specific contexts on the Falke Device.
 After receiving the key from Swarovski, add it to the `local.properties` files
 as the constant `OPENAPI_API_KEY`. Example:
 
-   $ cat local.properties
-   [...]
-   sdk.dir=/home/slengfeld/Android/Sdk
-   OPENAPI_API_KEY = ey[...]IA
+    $ cat local.properties
+    [...]
+    sdk.dir=/home/slengfeld/Android/Sdk
+    OPENAPI_API_KEY = ey[...]IA
 
 The you can compile the app either with Android Studio or on the commandline
 
