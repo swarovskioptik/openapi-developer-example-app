@@ -276,7 +276,7 @@ class MainActivity : Activity() {
 
         // NOTE: You should check for errors on the Completable object. But these will only include
         // errors on the local side, e.g. a lost connection to the Falke.
-        // The remove side, the falke, does not report errors, e.g. a wrong keyCode name or
+        // The remote side, the falke, does not report errors, e.g. a wrong keyCode name or
         // a wrong procedure value.
         val params = ConfigureKeyActionProcedure.Params(
             "SCROLL_KEY",
