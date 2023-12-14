@@ -171,15 +171,10 @@ class MainActivity : Activity() {
         val deviceSearcher = SOCommDeviceSearcher.create(this)
         deviceSearcher.search()
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { e ->
-                Log.e(TAG, "Error while searching Falke devices", e)
-                Toast.makeText(this, "Error while searching for Falke devices!", Toast.LENGTH_SHORT)
-                    .show()
-            }
-            .doOnNext { foundDevices ->
+            .subscribe({ foundDevices ->
                 if (DEBUG) Log.d(TAG, "foundDevices: $foundDevices")
                 if (foundDevices.isEmpty())
-                    return@doOnNext
+                    return@subscribe
 
                 // Just use the first device. This is only example code to show the concepts.
                 // A real world example would add the found devices to a list and show it to the
@@ -193,8 +188,12 @@ class MainActivity : Activity() {
 
                 // Dispose the Observable now. This will stop the search process.
                 deviceSearchDisposables.dispose()
+            }, { e ->
+                Log.e(TAG, "Error while searching Falke devices", e)
+                Toast.makeText(this, "Error while searching for Falke devices!", Toast.LENGTH_SHORT)
+                    .show()
             }
-            .subscribe()
+            )
             .addTo(deviceSearchDisposables)
 
         buttonConnectToFolke.setOnClickListener { button ->
