@@ -14,6 +14,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven(url = uri("https://repo.swarovskioptik.com/repository/maven-swarovski-optik/"))
     }
 }
 

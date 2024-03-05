@@ -63,27 +63,8 @@ android {
 dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // Include the "Swarovski SOComm Outside API / SDK":
-    //
-    // - From a maven repository
-    // implementation("com.swarovskioptik.comm:SOCommOutsideAPI:0.13.0")
-    //
-    // - From a local copy of the jar/aar files
-    implementation(files("../libs/mqtt-client-wrapper-rx-0.1.0.jar"))
-    implementation(files("../libs/ResubscribingReplayingShare-0.13.0.jar"))
-    implementation(files("../libs/SharedDefinitions-0.13.0.jar"))
-    implementation(files("../libs/SOBase-0.13.0.jar"))
-    implementation(files("../libs/SOCommMediaClient-0.13.0.aar"))
-    implementation(files("../libs/SOCommOutsideAPI-0.13.0.aar"))
-    implementation(files("../libs/SOLogger-0.13.0.jar"))
-    implementation(files("../libs/WifiMqttApi-0.13.0.aar"))
-    implementation(files("../libs/FileTransferManager-0.13.0.aar"))
-    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
-    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+    // Include the "Swarovski Optik SO Comm Outside API"
+    implementation("com.swarovskioptik.comm:SOCommOutsideAPI:0.14.0")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
-    implementation("com.jakewharton.rxrelay2:rxrelay:2.1.1")
-    implementation("no.nordicsemi.android:ble:2.5.1")
-    implementation("org.bouncycastle:bcpkix-jdk15to18:1.70")
-    implementation("com.google.protobuf:protobuf-javalite:3.21.1")
-    implementation("org.threeten:threetenbp:1.6.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 }
