@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2024 Swarovski-Optik AG & Co KG.
+// SPDX-License-Identifier: Apache-2.0
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
