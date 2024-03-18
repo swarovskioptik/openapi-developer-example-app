@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">OpenAPIDeveloperExampleApp</string>
     <string name="connect_to_falke">Connect to Falke (%1$s)</string>
+    <string name="main_help_text">The SCROLL_KEY (with an arrow on it) on the Falke is now configured to take a picture. Try it out! When pressed, you should see an animation on the screen. It signals that a picture was taken.</string>
 </resources>
