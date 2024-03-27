@@ -29,7 +29,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:text="The OpenAPI Inside App is not started on the Falke. Use the Selection Wheel to start the OpenAPI App. If the Screen is off, press the power button to turn on the screen. You should see the text 'Please Connect'."
+        android:text="The OpenAPI Inside App is not started on the AX Visio. Use the Selection Wheel to start the OpenAPI App. If the Screen is off, press the power button to turn on the screen. You should see the text 'Please Connect'."
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
