@@ -46,7 +46,7 @@ class MainActivity : Activity() {
     enum class UIState {
         NONE, // Only used initially for the first transition
         REQUEST_PERMISSIONS_AND_BLUETOOTH,
-        CONNECT_TO_FALKE,
+        CONNECT_TO_AX_VISIO,
         WAIT_FOR_OPENAPI_INSIDE_APP,
         MAIN,
     }
@@ -156,14 +156,14 @@ class MainActivity : Activity() {
         }
     }
 
-    private fun showConnectToFalkeScreen() {
-        setContentView(R.layout.connect_to_falke)
+    private fun showConnectToAXVisioScreen() {
+        setContentView(R.layout.connect_to_ax_visio)
 
-        val buttonConnectToFolke = findViewById<Button>(R.id.buttonConnectToFalke)
+        val buttonConnectToFolke = findViewById<Button>(R.id.buttonConnectToAXVisio)
 
         // Disable the button until at least one device is found
         buttonConnectToFolke.isEnabled = false
-        buttonConnectToFolke.text = getString(R.string.connect_to_falke, "UNKNOWN")
+        buttonConnectToFolke.text = getString(R.string.connect_to_ax_visio, "UNKNOWN")
 
         // TODO: This code starts the search and stops when the first device is found.
         // A real world application would continue the search and show the user a list of
@@ -189,13 +189,13 @@ class MainActivity : Activity() {
                 atomicDeviceValue.set(foundDevice.deviceName)
                 buttonConnectToFolke.isEnabled = true
                 buttonConnectToFolke.text =
-                    getString(R.string.connect_to_falke, foundDevice.deviceName)
+                    getString(R.string.connect_to_ax_visio, foundDevice.deviceName)
 
                 // Dispose the Observable now. This will stop the search process.
                 deviceSearchDisposables.dispose()
             }, { e ->
-                Log.e(TAG, "Error while searching Falke devices", e)
-                Toast.makeText(this, "Error while searching for Falke devices!", Toast.LENGTH_SHORT)
+                Log.e(TAG, "Error while searching AX Visio devices", e)
+                Toast.makeText(this, "Error while searching for AX Visio devices!", Toast.LENGTH_SHORT)
                     .show()
             }
             )
@@ -205,7 +205,7 @@ class MainActivity : Activity() {
             button.isEnabled = false
 
             sdk!!.connect(atomicDeviceValue.get())
-                // Add a timeout. Otherwise the screen will block forever when no Falke device
+                // Add a timeout. Otherwise the screen will block forever when no AX Visio device
                 // is in reach! But the timeout must also be long enough so the user can handle
                 // the initial pairing.
                 .timeout(60, TimeUnit.SECONDS)
@@ -216,8 +216,8 @@ class MainActivity : Activity() {
                         updateStateAndMaybeUI()
                     }, { e ->
                         button.isEnabled = true
-                        Log.e(TAG, "Connect connect to the Falke device", e)
-                        Toast.makeText(this, "Connecting to Falke failed!", Toast.LENGTH_SHORT)
+                        Log.e(TAG, "Connect connect to the AX Visio device", e)
+                        Toast.makeText(this, "Connecting to AX Visio failed!", Toast.LENGTH_SHORT)
                             .show()
                         updateStateAndMaybeUI()
                     }
@@ -233,16 +233,16 @@ class MainActivity : Activity() {
             .subscribe({ state ->
                 if (DEBUG) Log.d(TAG, "connectionState: $state")
                 if (state == SOCommOutsideAPI.ConnectionState.Disconnected) {
-                    Log.w(TAG, "Connection to falke lost!")
+                    Log.w(TAG, "Connection to AX Visio lost!")
                     Toast.makeText(
                         this,
-                        "Connection to Falke lost. Please try to reconnect",
+                        "Connection to AX Visio lost. Please try to reconnect",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
             }, { e ->
                 Log.e(TAG, "Connection state failed!", e)
-                Toast.makeText(this, "Connection to Falke failed!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Connection to AX Visio failed!", Toast.LENGTH_SHORT).show()
                 updateStateAndMaybeUI()
             })
             .addTo(disposables)
@@ -268,7 +268,7 @@ class MainActivity : Activity() {
                         .addTo(disposables)
                 } else {
                     // OpenAPIContextBLE context was removed. Maybe the user has turned off
-                    // the screen or selected another app with the selection key on the Falke.
+                    // the screen or selected another app with the selection wheel on the AX Visio.
                     updateStateAndMaybeUI()
                 }
             }
@@ -279,8 +279,8 @@ class MainActivity : Activity() {
         setContentView(R.layout.main)
 
         // NOTE: You should check for errors on the Completable object. But these will only include
-        // errors on the local side, e.g. a lost connection to the Falke.
-        // The remote side, the falke, does not report errors, e.g. a wrong keyCode name or
+        // errors on the local side, e.g. a lost connection to the AX Visio.
+        // The remote side, the AX Visio, does not report errors, e.g. a wrong keyCode name or
         // a wrong procedure value.
         val params = ConfigureKeyActionProcedure.Params(
             "SCROLL_KEY",
@@ -293,7 +293,7 @@ class MainActivity : Activity() {
                 Log.e(TAG, "Configure the key ActionProcedure failed!", e)
                 Toast.makeText(
                     this,
-                    "Failed to configure the key on the Falke.",
+                    "Failed to configure the key on the AX Visio.",
                     Toast.LENGTH_SHORT
                 ).show()
             })
@@ -308,7 +308,7 @@ class MainActivity : Activity() {
         if (connectionState == SOCommOutsideAPI.ConnectionState.Connecting
             || connectionState == SOCommOutsideAPI.ConnectionState.Disconnected
         )
-            return UIState.CONNECT_TO_FALKE
+            return UIState.CONNECT_TO_AX_VISIO
 
         if (!sdk!!.availableContexts.blockingFirst().contains(SOContext.OpenAPIContextBLE)
             || !sdk!!.contextsInUse.blockingFirst().contains(SOContext.OpenAPIContextBLE)
@@ -325,7 +325,7 @@ class MainActivity : Activity() {
             if (DEBUG) Log.d(TAG, "Switch UI from $uiState to $newUIState")
             when (newUIState) {
                 UIState.REQUEST_PERMISSIONS_AND_BLUETOOTH -> showRequestPermissionsAndBluetoothScreen()
-                UIState.CONNECT_TO_FALKE -> showConnectToFalkeScreen()
+                UIState.CONNECT_TO_AX_VISIO -> showConnectToAXVisioScreen()
                 UIState.WAIT_FOR_OPENAPI_INSIDE_APP -> showWaitForOpenAPIInsideAppScreen()
                 UIState.MAIN -> showMainScreen()
                 UIState.NONE -> throw RuntimeException("Should never happen")
