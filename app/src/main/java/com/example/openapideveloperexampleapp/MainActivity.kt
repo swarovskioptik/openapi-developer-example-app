@@ -18,6 +18,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.example.openapideveloperexampleapp.BuildConfig.DEBUG
+import com.jakewharton.threetenabp.AndroidThreeTen
 import com.swarovskioptik.comm.SOCommDeviceSearcher
 import com.swarovskioptik.comm.SOCommOutsideAPI
 import com.swarovskioptik.comm.SOCommOutsideAPIBuilder
@@ -85,6 +86,7 @@ class MainActivity : Activity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidThreeTen.init(this)
         bluetoothManager = getSystemService(BLUETOOTH_SERVICE) as BluetoothManager
         bluetoothAdapter = bluetoothManager!!.adapter
 
