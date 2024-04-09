@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">OpenAPIDeveloperExampleApp</string>
-    <string name="main_help_text">The SCROLL_KEY (with an arrow on it) on the Falke is now configured to take a picture. Try it out! When pressed, you should see an animation on the screen. It signals that a picture was taken.</string>
+    <string name="main_help_text">The SCROLL_KEY (with an arrow on it) on the AX Visio is now configured to take a picture. Try it out! When pressed, you should see an animation on the screen. It signals that a picture was taken.</string>
     <string name="connect_to_ax_visio">Connect to AX Visio (%1$s)</string>
+    <string name="application_name">OpenAPI Developer Example Application</string>
+    <string name="disconnect">Disconnect</string>
 </resources>
