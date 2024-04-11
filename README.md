@@ -75,11 +75,3 @@ If you see the build error
     gradleLocalProperties(ro…operty("OPENAPI_API_KEY") must not be null
 
 then the API key is missing. Please add it in the `local.properties` file.
-
-
-# Open Issues
-
-Currently the libraries of the *SO Comm SDK* are located in the folder `libs/`
-has binary artifacts and included locally. In the future these will be
-accessible via a maven repository and can be imported after providing a
-username and password.
