@@ -64,7 +64,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Include the "Swarovski Optik SO Comm Outside API"
-    implementation("com.swarovskioptik.comm:SOCommOutsideAPI:0.14.0")
+    implementation("com.swarovskioptik.comm:SOCommOutsideAPI:1.0.0")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 }
