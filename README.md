@@ -15,9 +15,9 @@ contexts can be used.
 To see all features of the OpenAPI, please see the
 [Swarovski Optik OpenAPI Documentation](https://swarovskioptik.github.io/openapi-docu/).
 
-The difference screens and user steps are
+The different activities, screens and user steps are
 
-![Four Screens](screens.png "Four-Screens")
+![Screenshots of applications](screens.png "Screenshots")
 
 
 # How to use the example code
@@ -29,11 +29,16 @@ application. All the error cases and possibilities are handled. Examples: the
 users selects a different app on the selection wheel or the user power down
 the AX Visio. In these cases the app switches back to the relevant screen.
 
+The code is already structure to be easily reusable. The common steps to
+connect to the AX Visio are factory out into a single
+[ConnectActivity](./app/src/main/java/com/example/openapideveloperexampleapp/ConnectActivity.kt).
+
 The code is _not_ a showcase of general Android Application development best
-practices. For example the app just uses a single activity and the different screens
-are shown by simply calling 'setContentView()'. A real world application is expected
-to use Android's [Navigation Components](https://developer.android.com/guide/navigation/)
-or similar libraries.
+practices. The different screens in the ConnectActivity are shown by simply
+calling 'setContentView()'. A real world application is expected to use
+Android's
+[Navigation Components](https://developer.android.com/guide/navigation/) or
+similar libraries.
 
 Furthermore the UI of the example is very basic. For example there are no
 transitions between the different screens. This is sometimes confusing because
@@ -75,3 +80,10 @@ If you see the build error
     gradleLocalProperties(ro…operty("OPENAPI_API_KEY") must not be null
 
 then the API key is missing. Please add it in the `local.properties` file.
+
+# Open Issues
+
+UI/UX can be improved with better UI elements and transitions only on user
+feedback.
+
+Factor out string contants from the layout XML to resource files.
