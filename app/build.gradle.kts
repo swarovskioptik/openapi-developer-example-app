@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2024 Swarovski-Optik AG & Co KG.
 // SPDX-License-Identifier: Apache-2.0
 
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
-
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 android {
     namespace = "com.example.openapideveloperexampleapp"
@@ -30,12 +30,14 @@ android {
     }
 
     buildTypes {
-        val openapi_api_key: String = gradleLocalProperties(rootDir).getProperty("OPENAPI_API_KEY")
+        val p = Properties()
+        p.load(project.rootProject.file("local.properties").reader())
+        val openapiApiKey: String = p.getProperty("OPENAPI_API_KEY")
         debug {
-            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapi_api_key\"")
+            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapiApiKey\"")
         }
         release {
-            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapi_api_key\"")
+            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapiApiKey\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
