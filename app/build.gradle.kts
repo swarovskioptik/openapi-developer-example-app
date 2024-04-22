@@ -1,12 +1,12 @@
 // SPDX-FileCopyrightText: 2024 Swarovski-Optik AG & Co KG.
 // SPDX-License-Identifier: Apache-2.0
 
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
-
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 android {
     namespace = "com.example.openapideveloperexampleapp"
@@ -30,12 +30,19 @@ android {
     }
 
     buildTypes {
-        val openapi_api_key: String = gradleLocalProperties(rootDir).getProperty("OPENAPI_API_KEY")
+        val openapiApiKey = if (project.hasProperty("OPENAPI_API_KEY")) {
+            project.property("OPENAPI_API_KEY") as String
+        } else {
+            val p = Properties()
+            p.load(project.rootProject.file("local.properties").reader())
+            if (!p.contains("OPENAPI_API_KEY")) throw Exception("Please add 'OPENAPI_API_KEY' property!")
+            p.getProperty("OPENAPI_API_KEY")
+        }
         debug {
-            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapi_api_key\"")
+            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapiApiKey\"")
         }
         release {
-            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapi_api_key\"")
+            buildConfigField("String", "OPENAPI_API_KEY", "\"$openapiApiKey\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -64,7 +71,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Include the "Swarovski Optik SO Comm Outside API"
-    implementation("com.swarovskioptik.comm:SOCommOutsideAPI:0.14.0")
+    implementation("com.swarovskioptik.comm:SOCommOutsideAPI:1.0.0")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 }

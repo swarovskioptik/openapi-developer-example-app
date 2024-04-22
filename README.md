@@ -57,33 +57,34 @@ is in progress.
 Before building the app, you need the OpenAPI API key. It's a JSON web token
 that grants your application to specific contexts on the AX Visio device.
 
-After receiving the key from Swarovski, add it to the `local.properties` files
-as the constant `OPENAPI_API_KEY`. Example:
+After receiving the key from Swarovski Optik, add it to the `local.properties`
+file as the constant `OPENAPI_API_KEY`. Example:
 
     $ cat local.properties
     [...]
     sdk.dir=/home/slengfeld/Android/Sdk
     OPENAPI_API_KEY = ey[...]IA
 
-The you can compile the app either with Android Studio or on the commandline
+You can also add it to the user wide `~/.gradle/gradle.properties` file.
+
+Then you can compile the app either with Android Studio or on the command line
 
     $ ./gradlew app:assembleDebug
 
 If you see the build error
 
     FAILURE: Build failed with an exception.
-
-    * Where:
-    Build file '.../app/build.gradle.kts' line: 30
-
+    [...]
     * What went wrong:
-    gradleLocalProperties(ro…operty("OPENAPI_API_KEY") must not be null
+    Please add 'OPENAPI_API_KEY' property!
 
-then the API key is missing. Please add it in the `local.properties` file.
+the API key is missing. Please add it in the user wide
+`~/.gradle/gradle.properties` or the project  local `local.properties` file.
+
 
 # Open Issues
 
 UI/UX can be improved with better UI elements and transitions only on user
 feedback.
 
-Factor out string contants from the layout XML to resource files.
+Factor out string constants from the layout XML to resource files.
