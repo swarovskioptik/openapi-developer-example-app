@@ -35,7 +35,7 @@ android {
         } else {
             val p = Properties()
             p.load(project.rootProject.file("local.properties").reader())
-            if (!p.contains("OPENAPI_API_KEY")) throw Exception("Please add 'OPENAPI_API_KEY' property!")
+            if (!p.containsKey("OPENAPI_API_KEY")) throw Exception("Please add 'OPENAPI_API_KEY' property!")
             p.getProperty("OPENAPI_API_KEY")
         }
         debug {
