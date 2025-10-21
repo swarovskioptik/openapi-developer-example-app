@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven(url = uri("https://artifacts.swarovskioptik.com/repository/maven-swarovski-optik/"))
+        maven(url = uri("https://artifacts.swarovskioptik.com/repository/external-maven-swarovski-optik/"))
     }
 }
 
